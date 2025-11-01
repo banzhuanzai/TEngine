@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f8a0dfbcd6854965bb6ae78627009a53, type: 3}
   m_Name: ScriptGeneratorSetting
   m_EditorClassIdentifier: 
-  _codePath: 
+  _codePath: GameScripts/HotFix/GameLogic/UI/
   _namespace: GameLogic
   _widgetName: item
   CodeStyle: 0

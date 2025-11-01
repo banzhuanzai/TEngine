@@ -276,13 +276,13 @@ namespace GameLogic
                 ScriptGenerator();
                 BindMemberProperty();
                 RegisterEvent();
-                OnCreate();
+                OnInit();
             }
         }
 
-        internal void InternalRefresh()
+        internal void InternalShow()
         {
-            OnRefresh();
+            OnShow();
         }
 
         internal bool InternalUpdate()
@@ -354,6 +354,11 @@ namespace GameLogic
             }
 
             return needUpdate;
+        }
+
+        internal void InternalOnHide()
+        {
+            OnHide();
         }
 
         internal void InternalDestroy(bool isShutDown = false)

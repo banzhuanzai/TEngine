@@ -411,7 +411,9 @@ namespace GameLogic
             window.HideTimerId = GameModule.Timer.AddTimer((arg) =>
             {
                 CloseUI(type);
-            },window.HideTimeToClose);
+            }, window.HideTimeToClose);
+
+            window.InternalOnHide();
 
             if (window.FullScreen)
             {
@@ -473,7 +475,7 @@ namespace GameLogic
         {
             OnSortWindowDepth(window.WindowLayer);
             window.InternalCreate();
-            window.InternalRefresh();
+            window.InternalShow();
             OnSetWindowVisible();
         }
 
@@ -531,7 +533,7 @@ namespace GameLogic
             }
             else
             {
-                window.Init(type.FullName, (int)UILayer.UI, fullScreen: window.FullScreen, assetName: type.Name, fromResources: false, hideTimeToClose: 10);
+                window.Init(type.FullName, (int)UILayer.UI, fullScreen: window.FullScreen, assetName: type.Name, fromResources: false, hideTimeToClose: 300);
             }
 
             return window;
@@ -552,7 +554,7 @@ namespace GameLogic
             }
             else
             {
-                window.Init(type.FullName, (int)UILayer.UI, fullScreen: window.FullScreen, assetName: type.Name, fromResources: false, hideTimeToClose: 10);
+                window.Init(type.FullName, (int)UILayer.UI, fullScreen: window.FullScreen, assetName: type.Name, fromResources: false, hideTimeToClose: 300);
             }
 
             return window;

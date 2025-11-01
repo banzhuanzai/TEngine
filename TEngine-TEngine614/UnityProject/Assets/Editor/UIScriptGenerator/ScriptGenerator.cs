@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.IO;
 using System.Text;
 using UnityEditor;
 using UnityEngine;
@@ -45,6 +46,7 @@ namespace TEngine.Editor.UI
                 Ergodic(root, root, ref strVar, ref strBind, ref strOnCreate, ref strCallback, isUniTask);
                 StringBuilder strFile = new StringBuilder();
 
+                includeListener = true;
                 if (includeListener)
                 {
 #if ENABLE_TEXTMESHPRO
@@ -56,11 +58,11 @@ namespace TEngine.Editor.UI
                     }
 
                     strFile.Append("using UnityEngine;\n");
-                    strFile.Append("using UnityEngine.UI;\n");
+                    // strFile.Append("using UnityEngine.UI;\n");
                     strFile.Append("using TEngine;\n\n");
                     strFile.Append($"namespace {ScriptGeneratorSetting.GetUINameSpace()}\n");
                     strFile.Append("{\n");
-                    
+
                     var widgetPrefix = $"{(ScriptGeneratorSetting.GetCodeStyle() == UIFieldCodeStyle.MPrefix ? "m_" : "_")}{ScriptGeneratorSetting.GetWidgetName()}";
                     if (root.name.StartsWith(widgetPrefix))
                     {
@@ -71,13 +73,14 @@ namespace TEngine.Editor.UI
                         strFile.Append($"\t[Window(UILayer.UI,location:\"{root.name}\")]\n");
                         strFile.Append("\tclass " + root.name + " : UIWindow\n");
                     }
-                    
+
                     strFile.Append("\t{\n");
                 }
 
                 // 脚本工具生成的代码
                 strFile.Append("\t\t#region 脚本工具生成的代码\n");
                 strFile.Append(strVar);
+                strFile.Append("\n");
                 strFile.Append("\t\tprotected override void ScriptGenerator()\n");
                 strFile.Append("\t\t{\n");
                 strFile.Append(strBind);
@@ -93,17 +96,72 @@ namespace TEngine.Editor.UI
                     strFile.Append(strCallback);
                     strFile.Append("\t\t#endregion\n\n");
 
+                    strFile.Append("\t\tprotected override void OnInit()\n");
+                    strFile.Append("\t\t{\n");
+                    strFile.Append("\n");
+                    strFile.Append("\t\t}\n");
+                    strFile.Append("\n");
+
+                    strFile.Append("\t\tprotected override void OnShow()\n");
+                    strFile.Append("\t\t{\n");
+                    strFile.Append("\n");
+                    strFile.Append("\t\t}\n");
+                    strFile.Append("\n");
+
+                    strFile.Append("\t\tprotected override void OnHide()\n");
+                    strFile.Append("\t\t{\n");
+                    strFile.Append("\n");
+                    strFile.Append("\t\t}\n");
+
                     strFile.Append("\t}\n");
                     strFile.Append("}\n");
                 }
 
-                TextEditor te = new TextEditor();
-                te.text = strFile.ToString();
-                te.SelectAll();
-                te.Copy();
+                // TextEditor te = new TextEditor();
+                // te.text = strFile.ToString();
+                // te.SelectAll();
+                // te.Copy();
+
+                var path = Application.dataPath + "/" + ScriptGeneratorSetting.GetCodePath();
+                path += root.name + "/" + root.name + ".cs";
+                CreateFile(path, strFile.ToString());
             }
 
-            Debug.Log($"脚本已生成到剪贴板，请自行Ctl+V粘贴");
+            // Debug.Log($"脚本已生成到剪贴板，请自行Ctl+V粘贴");                 
+        }
+
+        public static void CreateFile(string fullPath, string content)
+        {
+            try
+            {
+                if (File.Exists(fullPath))
+                {
+                    Debug.Log("UI文件已存在: " + fullPath);
+                    return;
+                }
+
+                // 确保目录存在，如果不存在则创建
+                string directory = Path.GetDirectoryName(fullPath);
+                if (!Directory.Exists(directory))
+                {
+                    Directory.CreateDirectory(directory);
+                    // Debug.Log("Created directory: " + directory);
+                }
+
+                // 将字符串写入文件                
+                File.WriteAllText(fullPath, content);
+
+                // 如果在编辑器中运行，刷新 AssetDatabase 以便 Unity 立即识别新脚本
+#if UNITY_EDITOR
+                UnityEditor.AssetDatabase.Refresh();
+                // Debug.Log("AssetDatabase refreshed.");
+                Debug.Log($"脚本已生成到UI文件夹 " + fullPath);
+#endif
+            }
+            catch (System.Exception e)
+            {
+                Debug.LogError("Failed to create file: " + e.Message);
+            }
         }
 
         public static void Ergodic(Transform root, Transform transform, ref StringBuilder strVar, ref StringBuilder strBind, ref StringBuilder strOnCreate,
@@ -179,7 +237,7 @@ namespace TEngine.Editor.UI
             ref StringBuilder strCallback, bool isUniTask)
         {
             string varName = child.name;
-            
+
             string componentName = string.Empty;
 
             var rule = ScriptGeneratorSetting.GetScriptGenerateRule().Find(t => varName.StartsWith(t.uiElementRegex));
@@ -188,22 +246,22 @@ namespace TEngine.Editor.UI
             {
                 componentName = rule.componentName;
             }
-            
+
             bool isUIWidget = rule is { isUIWidget: true };
 
             if (componentName == string.Empty)
             {
                 return;
             }
-            
+
             var codeStyle = ScriptGeneratorSetting.Instance.CodeStyle;
             if (codeStyle == UIFieldCodeStyle.UnderscorePrefix)
             {
                 if (varName.StartsWith("_"))
                 {
-                    
+
                 }
-                else if(varName.StartsWith("m_"))
+                else if (varName.StartsWith("m_"))
                 {
                     varName = varName.Substring(1);
                 }
@@ -216,7 +274,7 @@ namespace TEngine.Editor.UI
             {
                 if (varName.StartsWith("m_"))
                 {
-                    
+
                 }
                 else if (varName.StartsWith("_"))
                 {
@@ -231,7 +289,7 @@ namespace TEngine.Editor.UI
             string varPath = GetRelativePath(child, root);
             if (!string.IsNullOrEmpty(varName))
             {
-                strVar.Append("\t\tprivate " + componentName + " " + varName + ";\n");
+                strVar.Append("\t\t" + componentName + " " + varName + ";\n");
                 switch (componentName)
                 {
                     case "Transform":

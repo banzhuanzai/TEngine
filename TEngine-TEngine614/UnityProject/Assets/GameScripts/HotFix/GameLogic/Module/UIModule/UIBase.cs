@@ -137,14 +137,21 @@ namespace GameLogic
         /// <summary>
         /// 窗口创建。
         /// </summary>
-        protected virtual void OnCreate()
+        protected virtual void OnInit()
         {
         }
 
         /// <summary>
         /// 窗口刷新。
         /// </summary>
-        protected virtual void OnRefresh()
+        protected virtual void OnShow()
+        {
+        }
+
+        /// <summary>
+        /// 窗口关闭。
+        /// </summary>
+        protected virtual void OnHide()
         {
         }
 

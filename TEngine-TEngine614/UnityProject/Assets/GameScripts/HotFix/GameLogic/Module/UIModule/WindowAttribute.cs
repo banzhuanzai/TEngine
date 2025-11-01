@@ -42,7 +42,7 @@ namespace GameLogic
 
         public readonly int HideTimeToClose;
 
-        public WindowAttribute(int windowLayer, string location = "", bool fullScreen = false, int hideTimeToClose = 10)
+        public WindowAttribute(int windowLayer, string location = "", bool fullScreen = false, int hideTimeToClose = 300)
         {
             WindowLayer = windowLayer;
             Location = location;
@@ -50,7 +50,7 @@ namespace GameLogic
             HideTimeToClose = hideTimeToClose;
         }
 
-        public WindowAttribute(UILayer windowLayer, string location = "", bool fullScreen = false, int hideTimeToClose = 10)
+        public WindowAttribute(UILayer windowLayer, string location = "", bool fullScreen = false, int hideTimeToClose = 300)
         {
             WindowLayer = (int)windowLayer;
             Location = location;
@@ -58,7 +58,7 @@ namespace GameLogic
             HideTimeToClose = hideTimeToClose;
         }
 
-        public WindowAttribute(UILayer windowLayer, bool fromResources, bool fullScreen = false, int hideTimeToClose = 10)
+        public WindowAttribute(UILayer windowLayer, bool fromResources, bool fullScreen = false, int hideTimeToClose = 300)
         {
             WindowLayer = (int)windowLayer;
             FromResources = fromResources;
@@ -66,7 +66,7 @@ namespace GameLogic
             HideTimeToClose = hideTimeToClose;
         }
 
-        public WindowAttribute(UILayer windowLayer, bool fromResources, string location, bool fullScreen = false, int hideTimeToClose = 10)
+        public WindowAttribute(UILayer windowLayer, bool fromResources, string location, bool fullScreen = false, int hideTimeToClose = 300)
         {
             WindowLayer = (int)windowLayer;
             FromResources = fromResources;

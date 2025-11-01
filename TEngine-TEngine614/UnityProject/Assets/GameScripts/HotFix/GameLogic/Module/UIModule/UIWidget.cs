@@ -212,8 +212,8 @@ namespace GameLogic
             ScriptGenerator();
             BindMemberProperty();
             RegisterEvent();
-            OnCreate();
-            OnRefresh();
+            OnInit();
+            OnShow();
             IsPrepare = true;
 
             if (!visible)

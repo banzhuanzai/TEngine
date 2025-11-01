@@ -33,7 +33,7 @@ namespace GameLogic
 
         #endregion
 
-        protected override void OnRefresh()
+        protected override void OnShow()
         {
             _errorTextString.Push(UserData.ToString());
             m_textError.text = UserData.ToString();

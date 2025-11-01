@@ -179,7 +179,9 @@ namespace TEngine.Editor.UI
                 return string.Empty;
             }
 
-            return Instance.CodePath;
+            // return Instance.CodePath;
+            var path = "GameScripts/HotFix/GameLogic/UI/";
+            return path;
         }
         
         public static string GetWidgetName()
