@@ -358,6 +358,14 @@ namespace GameLogic
 
         internal void InternalOnHide()
         {
+            RemoveAllUIEvent();
+
+            for (int i = 0; i < ListChild.Count; i++)
+            {
+                var uiChild = ListChild[i];
+                uiChild.CallHide();               
+            }
+
             OnHide();
         }
 
@@ -365,7 +373,7 @@ namespace GameLogic
         {
             _isCreate = false;
 
-            RemoveAllUIEvent();
+            // RemoveAllUIEvent();
 
             for (int i = 0; i < ListChild.Count; i++)
             {

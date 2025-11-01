@@ -148,6 +148,11 @@ namespace GameLogic
         {
         }
 
+        internal void CallHide()
+        {
+            OnHide();
+        }
+
         /// <summary>
         /// 窗口关闭。
         /// </summary>
@@ -192,6 +197,10 @@ namespace GameLogic
         /// </summary>
         protected virtual void OnSetVisible(bool visible)
         {
+            if (visible)
+                OnShow();
+            else
+                OnHide();
         }
 
         internal void SetUpdateDirty()
