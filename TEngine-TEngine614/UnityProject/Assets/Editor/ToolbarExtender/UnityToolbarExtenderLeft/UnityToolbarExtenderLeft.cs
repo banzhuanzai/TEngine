@@ -8,9 +8,9 @@ namespace TEngine
     {
         static UnityToolbarExtenderLeft()
         {
-            ToolbarExtender.LeftToolbarGUI.Add(OnToolbarGUI_SceneLauncher);
-            EditorApplication.playModeStateChanged += OnPlayModeStateChanged;
-            EditorApplication.quitting += OnEditorQuit;
+            // ToolbarExtender.LeftToolbarGUI.Add(OnToolbarGUI_SceneLauncher);
+            // EditorApplication.playModeStateChanged += OnPlayModeStateChanged;
+            // EditorApplication.quitting += OnEditorQuit;
         }
     }
 }
