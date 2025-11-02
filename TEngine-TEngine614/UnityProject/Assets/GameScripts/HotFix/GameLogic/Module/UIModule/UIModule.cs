@@ -264,14 +264,14 @@ namespace GameLogic
         }
 
         /// <summary>
-        /// 同步打开窗口。
+        /// 异步打开窗口。
         /// </summary>
         /// <typeparam name="T">窗口类。</typeparam>
         /// <param name="userDatas">用户自定义数据。</param>
         /// <returns>打开窗口操作句柄。</returns>
         public void ShowUI<T>(params System.Object[] userDatas) where T : UIWindow , new()
         {
-            ShowUIImp<T>(false, userDatas);
+            ShowUIImp<T>(true, userDatas);//默认异步加载
         }
         
         /// <summary>
